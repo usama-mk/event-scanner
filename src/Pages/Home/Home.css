@@ -25,4 +25,7 @@ select option {
     height: 70vh;
     justify-content: center;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    
 }

@@ -1,11 +1,68 @@
-import React from 'react';
+import { Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Poster from '../../Components/Poster/Poster';
+import { firebaseApp } from '../../firebase';
 import './Home.css'
 
 export default function Home() {
+    const [user, setUser] = useState("");
+    const handleLoginRoute=(url)=>{
+        window.location.href=url ;
+    }
+    const handleLogout= ()=>{
+        firebaseApp.auth().signOut();
+        
+    }
+    const authListener = ()=>{
+        firebaseApp.auth().onAuthStateChanged((user)=>{
+            if(user){
+                
+                setUser(user);
+            }
+            else{
+                setUser("");
+            }
+        })
+    }
+    const handleCreatePostRoute=()=>{
+       window.location.assign("/createpost")
+    }
+    const handleApprovePostRoute=()=>{
+        window.location.assign("/approvepost")
+    }
+    useEffect(()=>{
+        authListener()
+    },[])
     return (
         <div className="home">
             <div className="title">
+               <div style={{marginTop:"5vh"}}>
+                   {
+                       user && <span style={{color:"white"}} >
+                           Logged in as: {user.email} <br/>
+                       </span> 
+                   }
+               {
+                   !user && <Button onClick={()=>{handleLoginRoute("/login")}}>
+                   <h4 style={{color:"yellow"}}>Login</h4>
+               </Button>
+               }
+                {
+                    user && <Button onClick={handleLogout}>
+                    <h4 style={{color:"red"}}>Log Out</h4>
+                </Button>
+                }
+                 {
+                    user && <Button onClick={handleCreatePostRoute}>
+                    <h4 style={{color:"yellow"}}>Create Post</h4>
+                </Button>
+                }
+                 {
+                    user && <Button onClick={handleApprovePostRoute}>
+                    <h4 style={{color:"blue"}}>Approve Post</h4>
+                </Button>
+                }
+               </div>
               <h1>
               EventsScanner! Searching for an event made simple!
               </h1>
@@ -51,6 +108,23 @@ export default function Home() {
               
             </div>
             <div className="container">
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
+                <Poster/>
                 <Poster/>
             </div>
             
