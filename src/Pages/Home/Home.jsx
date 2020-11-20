@@ -27,6 +27,9 @@ export default function Home(props) {
         
         const unsubscribe = db.collection('posters').onSnapshot((snapshot)=>
                {
+                   if(!snapshot){
+                       return;
+                   }
               setPosters(snapshot.docs.map(doc =>                              
                   ({
                       id: doc.id,        //the unique 'auto' ids
