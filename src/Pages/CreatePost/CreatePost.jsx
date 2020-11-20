@@ -55,7 +55,9 @@ export default function CreatePost(props) {
     const [linkToEvent, setLinkToEvent] = useState("");
     const [uploader, setUploader] = useState("");
     
-    
+    const handleHomeRoute=()=>{
+        window.location.assign("/");
+    }
     const onSubmit = data => {
         data.userEmail= props.user.email;
         console.log(data.userEmail)
@@ -135,6 +137,7 @@ export default function CreatePost(props) {
 
     return (
         <div  className={classes.paper}>
+            <h5 style={{color:"yellow"}} onClick={handleHomeRoute}>Home</h5>
             <h1>Create Poster</h1>
             <h2>Upload Poster Picture</h2>
               <div>

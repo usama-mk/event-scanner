@@ -7,7 +7,12 @@ import './Home.css'
 export default function Home(props) {
     const {user}= props;
     const[posters, setPosters]= useState([]);
-   
+   const [genre, setGenre]=useState(["Action", "Comedy", "Romance"])
+   const[selectedGenre, setSelectedGenre]=useState("");
+   const [selectedCity, setSelectedCity] = useState("");
+    const [selectedLocation, setSelectedLocation] = useState("");
+    const [selectedMonthAndYear, setSelectedMonthAndYear ] = useState("");
+
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
     }
@@ -22,7 +27,16 @@ export default function Home(props) {
     const handleApprovePostRoute=()=>{
         window.location.assign("/approvepost")
     }
-
+   const selectGenre=()=>{
+    const GENRE= document.getElementById("genre").value
+    setSelectedGenre(GENRE);
+   }
+   const resetFilters=()=>{
+       setSelectedGenre("")
+       setSelectedLocation("")
+       setSelectedMonthAndYear("")
+       setSelectedCity("")
+   }
     useEffect(()=>{
         
         const unsubscribe = db.collection('posters').onSnapshot((snapshot)=>
@@ -80,11 +94,13 @@ export default function Home(props) {
               </h1>
               <div className="dropDowns">
   
-                <select style={{padding:"5px", margin:"10px"}} name="genre" id="genre">
+                <select onChange={selectGenre} style={{padding:"5px", margin:"10px"}} name="genre" id="genre">
                 <option value="" disabled selected>Genre</option>
-                    <option value="Action">Action</option>
-                    <option value="Comedy">Comedy</option>
-                    <option value="Romance">Romance</option>
+                   {genre.map((genre)=>{
+                     return  <option value={genre}>
+                               {genre}
+                       </option>
+                   })}
                 </select>
 
                 <select style={{padding:"5px", margin:"10px"}} name="city" id="city">
@@ -119,17 +135,31 @@ export default function Home(props) {
 
               
             </div>
+            <Button onClick={resetFilters}>Reset</Button>
             <div className="container">
                {
                    posters.map((poster)=>{
-                       return <Poster city={poster.data.city} 
-                       location={poster.data.location}
-                       monthAndYear={poster.data.monthAndYear}
-                       genre={poster.data.eventType}
-                       imageUrl= {poster.data.imageUrl}
-                       name={poster.data.name}
-
-                       />
+                       if(selectedGenre==poster.data.eventType){
+                           console.log(`selected genre is ${selectedGenre}`)
+                        return <Poster city={poster.data.city} 
+                        location={poster.data.location}
+                        monthAndYear={poster.data.monthAndYear}
+                        genre={poster.data.eventType}
+                        imageUrl= {poster.data.imageUrl}
+                        name={poster.data.name}
+                        />
+                       }
+                       else if(!selectedGenre){
+                           console.log("selected genre not selected")
+                        return <Poster city={poster.data.city} 
+                        location={poster.data.location}
+                        monthAndYear={poster.data.monthAndYear}
+                        genre={poster.data.eventType}
+                        imageUrl= {poster.data.imageUrl}
+                        name={poster.data.name}
+                        />
+                       }
+                      
                    })
                }
             </div>
