@@ -62,41 +62,48 @@ export default function CreatePost(props) {
         const refID = db.collection("posters").doc().id;
         const ref = db.collection('posters').doc(refID);  
         var URL;
-        storage.ref("images").child(file.name).getDownloadURL().then(url => {
-                       URL=url;      
-    
-                    }).then(()=>{
-                        ref.set({
-                            userEmail: data.userEmail,
-                            imageUrl: URL,
-                            name: data.name,
-                            country: data.country,
-                            city: data.city,
-                            location: data.location,
-                            monthAndYear: data.monthAndYear,
-                            eventType: data.eventType,
-                            description: data.description,
-                            linkToEvent: data.linkToEvent,
-                            uploader: data.uploader
-                        })
-                    }).then(()=>{
-                        ref.update({
-                            imageUrl: URL
-                        })
-                        // clearEditProfile();
-                    })
+        if(file && progress==100){
+            storage.ref("images").child(file.name).getDownloadURL().then(url => {
+                URL=url;      
+
+             }).then(()=>{
+                 ref.set({
+                     userEmail: data.userEmail,
+                     imageUrl: URL,
+                     name: data.name,
+                     country: data.country,
+                     city: data.city,
+                     location: data.location,
+                     monthAndYear: data.monthAndYear,
+                     eventType: data.eventType,
+                     description: data.description,
+                     linkToEvent: data.linkToEvent,
+                     uploader: data.uploader
+                 })
+             }).then(()=>{
+                 ref.update({
+                     imageUrl: URL
+                 })
+                 // clearEditProfile();
+             })
+
+             toast.success('🚀 Successfully added the data to the database ', {
+                position: "bottom-center",
+                autoClose: true,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+                reset();
+                setFile("");
+        }
+      else{
+        toast.warning("please upload an image or let it finish uploading");
+      }
        
-        toast.success('🚀 Successfully added the data to the database ', {
-            position: "bottom-center",
-            autoClose: true,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
-            reset();
-            setFile("");
+       
     };
    
     const selectFileHandler = (event) => {
