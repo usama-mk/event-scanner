@@ -58,17 +58,26 @@ export default function CreatePost(props) {
     
     const onSubmit = data => {
         data.userEmail= props.user.email;
-        console.log(data.name)
-        const ref = db.collection('posters').doc(props.user.uid);  
+        console.log(data.userEmail)
+        const refID = db.collection("posters").doc().id;
+        const ref = db.collection('posters').doc(refID);  
         var URL;
         storage.ref("images").child(file.name).getDownloadURL().then(url => {
                        URL=url;      
     
                     }).then(()=>{
                         ref.set({
-                            name: data.name,
+                            userEmail: data.userEmail,
                             imageUrl: URL,
-                            description: data.description
+                            name: data.name,
+                            country: data.country,
+                            city: data.city,
+                            location: data.location,
+                            monthAndYear: data.monthAndYear,
+                            eventType: data.eventType,
+                            description: data.description,
+                            linkToEvent: data.linkToEvent,
+                            uploader: data.uploader
                         })
                     }).then(()=>{
                         ref.update({
@@ -79,7 +88,7 @@ export default function CreatePost(props) {
        
         toast.success('🚀 Successfully added the data to the database ', {
             position: "bottom-center",
-            autoClose: false,
+            autoClose: true,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -87,6 +96,7 @@ export default function CreatePost(props) {
             progress: undefined,
             });
             reset();
+            setFile("");
     };
    
     const selectFileHandler = (event) => {
@@ -146,6 +156,16 @@ export default function CreatePost(props) {
   <div>
     <input style={{marginTop:"10px"}} placeholder="Location" name="location" type="text" ref={register({required: true})}/>
     <label>Location</label>
+  </div>
+  {/*  */}
+  <div>
+    <input className="selectDate" style={{marginTop:"10px"}}  name="monthAndYear" type="month" ref={register({required: true})}/>
+    <label>Month & Year</label>
+  </div>
+  {/*  */}
+  <div>
+    <input style={{marginTop:"10px"}} placeholder="Event Type" name="eventType" type="text" ref={register({required: true})}/>
+    <label>Event Type</label>
   </div>
   {/*  */}
   <div>
