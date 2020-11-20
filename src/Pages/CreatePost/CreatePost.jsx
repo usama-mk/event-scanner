@@ -1,12 +1,13 @@
-import { IconButton, Input, TextField } from '@material-ui/core';
-import React from 'react';
+import { IconButton, Input, LinearProgress, TextField } from '@material-ui/core';
+import React, { useState } from 'react';
 import {useForm} from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-import { firebaseApp } from '../../firebase';
+import { db, firebaseApp, storage } from '../../firebase';
 import { toast } from 'react-toastify';
 // import '../Components/toast.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './CreatePost.scss'
+
 
 
 toast.configure();
@@ -42,18 +43,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreatePost(props) {
     const classes= useStyles();
-    const {register, handleSubmit, errors, reset} = useForm();
-
+    const {register,handleSubmit, errors, reset} = useForm();
+    const [progress, setProgress] = useState(0);
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [file, setFile] = useState("");
+    const [country , setCountry] = useState("");
+    const [city, setCity] = useState("");
+    const [location, setLocation] = useState("");
+    const [eventType, setEventType] = useState("");
+    const [linkToEvent, setLinkToEvent] = useState("");
+    const [uploader, setUploader] = useState("");
+    
+    
     const onSubmit = data => {
-        data.user_Email= props.user.email;
-        data.invisible="0";
-        data.remove="0";
-        var newRef = firebaseApp.database().ref().child("worklocations").push();
-        // data.worklocationID= groupId;
-        var key= newRef.key;
-        data.key=key;
-        console.log(data);
-        newRef.set(data)
+        data.userEmail= props.user.email;
+        console.log(data.name)
+        const ref = db.collection('posters').doc(props.user.uid);  
+        var URL;
+        storage.ref("images").child(file.name).getDownloadURL().then(url => {
+                       URL=url;      
+    
+                    }).then(()=>{
+                        ref.set({
+                            name: data.name,
+                            imageUrl: URL,
+                            description: data.description
+                        })
+                    }).then(()=>{
+                        ref.update({
+                            imageUrl: URL
+                        })
+                        // clearEditProfile();
+                    })
        
         toast.success('🚀 Successfully added the data to the database ', {
             position: "bottom-center",
@@ -66,36 +88,86 @@ export default function CreatePost(props) {
             });
             reset();
     };
+   
+    const selectFileHandler = (event) => {
+        if (event.target.files[0]) {
+            setFile(event.target.files[0]);
+        }
+    
+    }
+   
+    const uploadFileHandler = () => {
+        if (file) {
+            const uploadTask = storage.ref(`images/${file.name}`).put(file);
+            uploadTask.on(
+                "state_changed",
+                snapshot => {
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                    );
+                    setProgress(progress);
+                    console.log(progress)
+                },
+                error => {
+                    console.log(error);
+                },
+               
+            )
+        }
+    }
+
     return (
         <div  className={classes.paper}>
-            <h1>Add Work Location</h1>
+            <h1>Create Poster</h1>
+            <h2>Upload Poster Picture</h2>
+              <div>
+              <input type="file" className="input"  onChange={selectFileHandler}/> <br/>
+               <LinearProgress color="primary" variant="determinate" value={progress} />
+               <button className="btn"  onClick={uploadFileHandler} >Upload</button>
+              </div>
            <form autoComplete="off" className="go-right" onSubmit={handleSubmit(onSubmit)} >
-           <div>
-               
-           <input style={{marginTop:"10px"}} placeholder="Workplace Name"   type="text" name="name_workLocation" ref={register({required: true})}/>
-    <label >Workplace Name</label>
+        
+  {/*  */}
+  <div>
+           <input style={{marginTop:"10px"}} placeholder="Name"  type="text"  name="name"  ref={register({required: true})}/>
+    <label >Name</label>
   </div>
   {/*  */}
   <div>
-           <input style={{marginTop:"10px"}} placeholder="Customer name"  type="text"  name="name_customer"  ref={register({required: true})}/>
-    <label >Customer name</label>
+    <input style={{marginTop:"10px"}} placeholder="Country" name="country" type="text" ref={register({required: true})}/>
+    <label>Country</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Street and House Number" name="street" type="text" ref={register({required: true})}/>
-    <label>Street and House Number</label>
+    <input style={{marginTop:"10px"}} placeholder="City" name="city" type="text" ref={register({required: true})}/>
+    <label>City</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Zip Code Place" name="postal_code" type="text" ref={register({required: true})}/>
-    <label>Zip Code Place</label>
+    <input style={{marginTop:"10px"}} placeholder="Location" name="location" type="text" ref={register({required: true})}/>
+    <label>Location</label>
+  </div>
+  {/*  */}
+  <div>
+    <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true})}/>
+    <label>Description</label>
+  </div>
+  {/*  */}
+  <div>
+    <input style={{marginTop:"10px"}} placeholder="Link To Event" name="linkToEvent" type="text" ref={register({required: true})}/>
+    <label>Link To Event</label>
+  </div>
+  {/*  */}
+  <div>
+    <input style={{marginTop:"10px"}} placeholder="Uploader" name="uploader" type="text" ref={register({required: true})}/>
+    <label>Uploader</label>
   </div>
   {/*  */}
    
   
            {/* {errors.password && <p>{errors.password.message}</p>} */}
            <IconButton>
-           <input style={{backgroundColor:"#f06d06"}} className={classes.submit} type="submit" value="Add Job Data" />
+           <input style={{backgroundColor:"#f06d06"}} className={classes.submit} type="submit" value="Add Poster" />
 
            </IconButton>           </form>
         </div>

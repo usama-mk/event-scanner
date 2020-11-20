@@ -4,8 +4,9 @@ import Poster from '../../Components/Poster/Poster';
 import { firebaseApp } from '../../firebase';
 import './Home.css'
 
-export default function Home() {
-    const [user, setUser] = useState("");
+export default function Home(props) {
+    const {user}= props;
+   
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
     }
@@ -13,26 +14,14 @@ export default function Home() {
         firebaseApp.auth().signOut();
         
     }
-    const authListener = ()=>{
-        firebaseApp.auth().onAuthStateChanged((user)=>{
-            if(user){
-                
-                setUser(user);
-            }
-            else{
-                setUser("");
-            }
-        })
-    }
+   
     const handleCreatePostRoute=()=>{
        window.location.assign("/createpost")
     }
     const handleApprovePostRoute=()=>{
         window.location.assign("/approvepost")
     }
-    useEffect(()=>{
-        authListener()
-    },[])
+     
     return (
         <div className="home">
             <div className="title">
