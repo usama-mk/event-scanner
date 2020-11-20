@@ -19,7 +19,7 @@ export default function Poster(props) {
      
     return (
         <div>
-            <div onClick={() =>{ setIsOpen(true); }} style={{backgroundColor:"rgba(0, 0, 0, 0.3)", width:"123px", height:"auto", padding:"5px", margin:"5px", marginTop:"4vh", display:"flex", flexDirection:"column", alignItems:"center"}} className="posterContainer">
+            <div onClick={() =>{ setIsOpen(true); }} style={{backgroundColor:"rgba(0, 0, 0, 0.3)", width:"auto", height:"auto", padding:"5px", margin:"5px", marginTop:"4vh", display:"flex", flexDirection:"column", alignItems:"center"}} className="posterContainer">
                  
             <span style={{width:"100%",alignItems:"start", color:"white", fontWeight:"bold", wordWrap:"break-word" }}>{name}</span> <br/>
                 <img  src={imageUrl?imageUrl:posterImg}  width="113" height="168" />
