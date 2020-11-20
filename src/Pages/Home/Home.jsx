@@ -1,11 +1,12 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Poster from '../../Components/Poster/Poster';
-import { firebaseApp } from '../../firebase';
+import { db, firebaseApp } from '../../firebase';
 import './Home.css'
 
 export default function Home(props) {
     const {user}= props;
+    const[posters, setPosters]= useState([]);
    
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
@@ -21,6 +22,25 @@ export default function Home(props) {
     const handleApprovePostRoute=()=>{
         window.location.assign("/approvepost")
     }
+
+    useEffect(()=>{
+        
+        const unsubscribe = db.collection('posters').onSnapshot((snapshot)=>
+               {
+              setPosters(snapshot.docs.map(doc =>                              
+                  ({
+                      id: doc.id,        //the unique 'auto' ids
+                      data: doc.data(),  //the data inside the doc(coll>doc>data)
+                  })
+                  ))
+               } );
+            //    console.log(posters[0].data.name);
+           
+               return () => {      //when comp cleansup/unmount(cleansup is better), (always) detach this real time listener after it's done using it(best def)
+                   unsubscribe();  //this is for optimization
+               }
+             
+          }, []); 
      
     return (
         <div className="home">
@@ -97,24 +117,18 @@ export default function Home(props) {
               
             </div>
             <div className="container">
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
-                <Poster/>
+               {
+                   posters.map((poster)=>{
+                       return <Poster city={poster.data.city} 
+                       location={poster.data.location}
+                       monthAndYear={poster.data.monthAndYear}
+                       genre={poster.data.eventType}
+                       imageUrl= {poster.data.imageUrl}
+                       name={poster.data.name}
+
+                       />
+                   })
+               }
             </div>
             
         </div>
