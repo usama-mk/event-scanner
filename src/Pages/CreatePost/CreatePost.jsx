@@ -45,15 +45,15 @@ export default function CreatePost(props) {
     const classes= useStyles();
     const {register,handleSubmit, errors, reset} = useForm();
     const [progress, setProgress] = useState(0);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
     const [file, setFile] = useState("");
-    const [country , setCountry] = useState("");
-    const [city, setCity] = useState("");
-    const [location, setLocation] = useState("");
-    const [eventType, setEventType] = useState("");
-    const [linkToEvent, setLinkToEvent] = useState("");
-    const [uploader, setUploader] = useState("");
+    // const [name, setName] = useState("");
+    // const [description, setDescription] = useState("");
+    // const [country , setCountry] = useState("");
+    // const [city, setCity] = useState("");
+    // const [location, setLocation] = useState("");
+    // const [eventType, setEventType] = useState("");
+    // const [linkToEvent, setLinkToEvent] = useState("");
+    // const [uploader, setUploader] = useState("");
     
     const handleHomeRoute=()=>{
         window.location.assign("/");
@@ -80,7 +80,8 @@ export default function CreatePost(props) {
                      eventType: data.eventType,
                      description: data.description,
                      linkToEvent: data.linkToEvent,
-                     uploader: data.uploader
+                     uploader: data.uploader,
+                     approved: false,
                  })
              }).then(()=>{
                  ref.update({

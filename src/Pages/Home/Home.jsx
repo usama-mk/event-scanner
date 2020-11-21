@@ -139,7 +139,7 @@ export default function Home(props) {
             <div className="container">
                {
                    posters.map((poster)=>{
-                       if(selectedGenre==poster.data.eventType){
+                       if(selectedGenre==poster.data.eventType && poster.data.approved==true){
                            console.log(`selected genre is ${selectedGenre}`)
                         return <Poster city={poster.data.city} 
                         location={poster.data.location}
