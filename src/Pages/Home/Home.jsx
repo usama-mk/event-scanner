@@ -7,7 +7,7 @@ import './Home.css'
 export default function Home(props) {
     const {user}= props;
     const[posters, setPosters]= useState([]);
-   const [genre, setGenre]=useState(["Action", "Comedy", "Romance"])
+    const[dropDownDetails, setDropDownDetails]= useState([]);
    const[selectedGenre, setSelectedGenre]=useState("");
    const [selectedCity, setSelectedCity] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
@@ -30,13 +30,40 @@ export default function Home(props) {
    const selectGenre=()=>{
     const GENRE= document.getElementById("genre").value
     setSelectedGenre(GENRE);
+    console.log(GENRE)
+     
    }
+   const selectCity=()=>{
+    const CITY= document.getElementById("city").value
+    setSelectedCity(CITY);
+    console.log(CITY)
+     
+   }
+   const selectMonth=()=>{
+    const MONTH= document.getElementById("month").value
+    setSelectedMonthAndYear(MONTH);
+    console.log(MONTH)
+     
+   }
+   const selectLocation=()=>{
+    const LOCATION= document.getElementById("location").value
+    setSelectedLocation(LOCATION);
+    console.log(LOCATION)
+     
+   }
+
    const resetFilters=()=>{
        setSelectedGenre("")
        setSelectedLocation("")
        setSelectedMonthAndYear("")
        setSelectedCity("")
+        document.getElementById("genre").value=""
+        document.getElementById("location").value=""
+        document.getElementById("month").value=""
+        document.getElementById("city").value=""
    }
+
+   //Getting Posters
     useEffect(()=>{
         
         const unsubscribe = db.collection('posters').onSnapshot((snapshot)=>
@@ -58,7 +85,33 @@ export default function Home(props) {
                }
              
           }, []); 
-     
+     //Getting drop downs
+
+     useEffect(()=>{
+      const unsubscribe= db.collection("posters").onSnapshot((snapshot)=>{
+          if(!snapshot.empty){
+            setDropDownDetails(
+                snapshot.docs.map(doc=>
+                    ({
+                        genre: doc.data().eventType,
+                        location: doc.data().location,
+                        city: doc.data().city,
+                        monthAndYear: doc.data().monthAndYear
+    
+    
+                    })
+                    )
+            );
+          }
+          
+      });
+
+      return () => {       
+      unsubscribe();   
+  }
+     },[])
+
+
     return (
         <div className="home">
             <div className="title">
@@ -89,39 +142,46 @@ export default function Home(props) {
                 </Button>
                 }
                </div>
-              <h1>
+              <h1 style={{display: "inline-block", color:"white", borderBottom: "1px solid black", }}>
               EventsScanner! Searching for an event made simple!
               </h1>
               <div className="dropDowns">
   
                 <select onChange={selectGenre} style={{padding:"5px", margin:"10px"}} name="genre" id="genre">
                 <option value="" disabled selected>Genre</option>
-                   {genre.map((genre)=>{
-                     return  <option value={genre}>
-                               {genre}
-                       </option>
-                   })}
+                {
+                      dropDownDetails.map((dropDowns)=>{
+                          
+                          return <option value={dropDowns.genre} >{dropDowns.genre}</option>
+                      })
+                  }
                 </select>
 
-                <select style={{padding:"5px", margin:"10px"}} name="city" id="city">
+                <select onChange={selectCity} style={{padding:"5px", margin:"10px"}} name="city" id="city">
                 <option value="" disabled selected>City</option>
-                    <option value="isb">isb</option>
-                    <option value="Lahore">Lahore</option>
-                    <option value="Karachi">Karachi</option>
+                  {
+                      dropDownDetails.map((dropDowns)=>{
+                          return <option value={dropDowns.city} >{dropDowns.city}</option>
+                      })
+                  }
                 </select>
 
-                <select style={{padding:"5px", margin:"10px"}} name="location" id="location">
+                <select onChange={selectLocation} style={{padding:"5px", margin:"10px"}} name="location" id="location">
                 <option value="" disabled selected>Location</option>
-                    <option value="Cent">Cent</option>
-                    <option value="cine">cine</option>
-                    <option value="Netflix">Netflix</option>
+                {
+                      dropDownDetails.map((dropDowns)=>{
+                          return <option value={dropDowns.location} >{dropDowns.location}</option>
+                      })
+                  }
                 </select>
 
-                <select style={{padding:"5px", margin:"10px"}} name="month" id="month">
+                <select onChange={selectMonth} style={{padding:"5px", margin:"10px"}} name="month" id="month">
                 <option value="" disabled selected>Month</option>
-                    <option value="Jan">Jan</option>
-                    <option value="Feb">Feb</option>
-                    <option value="March">March</option>
+                {
+                      dropDownDetails.map((dropDowns)=>{
+                          return <option value={dropDowns.monthAndYear} >{dropDowns.monthAndYear}</option>
+                      })
+                  }
                 </select>
               </div>
 
@@ -139,7 +199,7 @@ export default function Home(props) {
             <div className="container">
                {
                    posters.map((poster)=>{
-                       if(selectedGenre==poster.data.eventType && poster.data.approved==true){
+                       if((selectedGenre==poster.data.eventType) && poster.data.approved==true){
                            console.log(`selected genre is ${selectedGenre}`)
                         return <Poster city={poster.data.city} 
                         location={poster.data.location}
