@@ -2,7 +2,7 @@ import { Switch } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
-import { firebaseApp } from './firebase';
+import { db, firebaseApp } from './firebase';
 import ApprovePost from './Pages/ApprovePost/ApprovePost';
 import CreatePost from './Pages/CreatePost/CreatePost';
 import Home from './Pages/Home/Home';
@@ -10,6 +10,8 @@ import Login from './Pages/Login/Login';
 
 function App() {
   const [user, setUser] = useState("");
+  const [isAdmin, setIsAdmin]=useState("")
+
   const authListener = ()=>{
     firebaseApp.auth().onAuthStateChanged((user)=>{
         if(user){
@@ -21,17 +23,37 @@ function App() {
         }
     })
 }
+ 
 useEffect(()=>{
+   
   authListener();
-},[])
+  console.log("admin sec")
+  var docRef = db.collection("Admins").doc("cKbxaFUTg1KcAkgCXExa");
+  docRef.get().then(function(doc) {
+      if (doc.exists) {
+          console.log("Document data:", doc.data());
+         const adminsArray= doc.data().adminsArray;
+         adminsArray.map((admin)=>{
+            if(user.email==adminsArray){
+                setIsAdmin(true)
+            }
+         })
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
+},[isAdmin, user])
   return (
     <div className="App">
       <BrowserRouter>
        
-       <Route exact path="/"  render={()=>(<Home user={user} />)} />
+       <Route exact path="/"  render={()=>(<Home user={user} isAdmin={isAdmin} />)} />
        <Route exact path="/login" component={Login} />
-       <Route exact path="/createpost" render={()=>(<CreatePost user={user} />)} />
-       <Route exact path="/approvepost" render={()=>(<ApprovePost user={user} />)} />
+       <Route exact path="/createpost" render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />
+       <Route exact path="/approvepost" render={()=>(<ApprovePost user={user}  />)} />
       </BrowserRouter>
     </div>
   );

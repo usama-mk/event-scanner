@@ -12,6 +12,7 @@ export default function Home(props) {
    const [selectedCity, setSelectedCity] = useState("");
     const [selectedLocation, setSelectedLocation] = useState("");
     const [selectedMonthAndYear, setSelectedMonthAndYear ] = useState("");
+    const [isAdmin, setIsAdmin]=useState("")
 
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
@@ -62,6 +63,28 @@ export default function Home(props) {
         document.getElementById("month").value=""
         document.getElementById("city").value=""
    }
+   //check admin
+   useEffect(()=>{
+        // cKbxaFUTg1KcAkgCXExa
+        console.log("admin sec")
+        var docRef = db.collection("Admins").doc("cKbxaFUTg1KcAkgCXExa");
+        docRef.get().then(function(doc) {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+               const adminsArray= doc.data().adminsArray;
+               adminsArray.map((admin)=>{
+                  if(user.email==adminsArray){
+                      setIsAdmin(true)
+                  }
+               })
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+   },[isAdmin, posters])
 
    //Getting Posters
     useEffect(()=>{
@@ -137,7 +160,7 @@ export default function Home(props) {
                 </Button>
                 }
                  {
-                    user && <Button onClick={handleApprovePostRoute}>
+                   ( isAdmin) && <Button onClick={handleApprovePostRoute}>
                     <h4 style={{color:"blue"}}>Approve Post</h4>
                 </Button>
                 }

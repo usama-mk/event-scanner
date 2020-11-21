@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreatePost(props) {
     const classes= useStyles();
+    const isAdmin= props.isAdmin
     const {register,handleSubmit, errors, reset} = useForm();
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState("");
@@ -81,7 +82,7 @@ export default function CreatePost(props) {
                      description: data.description,
                      linkToEvent: data.linkToEvent,
                      uploader: data.uploader,
-                     approved: false,
+                     approved:isAdmin?true: false,
                  })
              }).then(()=>{
                  ref.update({
@@ -110,6 +111,7 @@ export default function CreatePost(props) {
     };
    
     const selectFileHandler = (event) => {
+         
         if (event.target.files[0]) {
             setFile(event.target.files[0]);
         }
