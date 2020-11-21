@@ -199,7 +199,9 @@ export default function Home(props) {
             <div className="container">
                {
                    posters.map((poster)=>{
-                       if((selectedGenre==poster.data.eventType) && poster.data.approved==true){
+                       if(((selectedGenre? selectedGenre==poster.data.eventType : true) && ( selectedCity ? selectedCity==poster.data.city : true)
+                        && (selectedLocation ? selectedLocation==poster.data.location: true) && (selectedMonthAndYear ? selectedMonthAndYear==poster.data.monthAndYear : true)
+                        ) && poster.data.approved==true){
                            console.log(`selected genre is ${selectedGenre}`)
                         return <Poster city={poster.data.city} 
                         location={poster.data.location}
@@ -209,7 +211,7 @@ export default function Home(props) {
                         name={poster.data.name}
                         />
                        }
-                       else if(!selectedGenre){
+                       else if(!selectedGenre && poster.data.approved==true){
                            console.log("selected genre not selected")
                         return <Poster city={poster.data.city} 
                         location={poster.data.location}
