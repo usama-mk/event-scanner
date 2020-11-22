@@ -29,7 +29,9 @@ export default function Poster(props) {
                 mainSrc={imageUrl?imageUrl:posterImg}
                 
                 imageTitle={name}
-                imageCaption= {`Genre: ${genre}  City: ${city} Location: ${location}  Month & Year: ${monthAndYear}`}
+                imageCaption={<h3 style={{ width:"100%", wordSpacing:"30px", textAlign:"center",}}>{
+                  `Genre=${genre}     City=${city}  Location=${location}  Month&Year=${monthAndYear}`}
+                  </h3>}
                 onCloseRequest={() =>{ setIsOpen(false);}}
                 />)
                 }
