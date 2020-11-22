@@ -61,6 +61,11 @@ export default function CreatePost(props) {
     }
     const onSubmit = data => {
         data.userEmail= props.user.email;
+        const dateL= (new Date(data.monthAndYear));
+        var mm=(dateL.getMonth());
+        mm=mm+1;
+        var yyyy=(dateL.getFullYear());
+        data.monthAndYear=`${mm}/${yyyy}`
         console.log(data.userEmail)
         const refID = db.collection("posters").doc().id;
         const ref = db.collection('posters').doc(refID);  
