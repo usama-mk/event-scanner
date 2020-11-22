@@ -152,47 +152,55 @@ export default function CreatePost(props) {
         
   {/*  */}
   <div>
-           <input style={{marginTop:"10px"}} placeholder="Name"  type="text"  name="name"  ref={register({required: true})}/>
+           <input style={{marginTop:"10px"}} placeholder="Name"  type="text"  name="name"  ref={register({required: true, maxLength: 25})}/>
+           {errors.name && <p style={{color:"red"}}>You can enter max 25 characters</p> }
     <label >Name</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Country" name="country" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="Country" name="country" type="text" ref={register({required: true, maxLength: 40})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 40 characters</p> }
     <label>Country</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="City" name="city" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="City" name="city" type="text" ref={register({required: true, maxLength: 40})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 40 characters</p> }
     <label>City</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Location" name="location" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="Location" name="location" type="text" ref={register({required: true, maxLength: 40})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 40 characters</p> }
     <label>Location</label>
   </div>
   {/*  */}
   <div>
     <input className="selectDate" style={{marginTop:"10px"}}  name="monthAndYear" type="month" ref={register({required: true})}/>
-    <label>Month & Year</label>
+    {/* <label>Month & Year</label> */}
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Event Type" name="eventType" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="Event Type" name="eventType" type="text" ref={register({required: true, maxLength: 20})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 20 characters</p> }
     <label>Event Type</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="Description" name="description" type="text" ref={register({required: true, maxLength: 200})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 200 characters</p> }
     <label>Description</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Link To Event" name="linkToEvent" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="Link To Event" name="linkToEvent" type="text" ref={register({required: true, maxLength:500})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 500 characters</p> }
     <label>Link To Event</label>
   </div>
   {/*  */}
   <div>
-    <input style={{marginTop:"10px"}} placeholder="Uploader" name="uploader" type="text" ref={register({required: true})}/>
+    <input style={{marginTop:"10px"}} placeholder="Uploader" name="uploader" type="text" ref={register({required: true, maxLength:30})}/>
+    {errors.name && <p style={{color:"red"}}>You can enter max 30 characters</p> }
     <label>Uploader</label>
   </div>
   {/*  */}
