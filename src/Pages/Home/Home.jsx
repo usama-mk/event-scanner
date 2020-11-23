@@ -160,9 +160,9 @@ export default function Home(props) {
     return (
         <div className="home">
             <div className="title">
-               <div style={{marginTop:"10vh"}}>
+               <div style={{marginTop:"7vh"}}>
                    {
-                       user && <span style={{color:"white", marginTop:"5vh", paddingTop:"30px"}} >
+                       user && <span style={{color:"white", marginTop:"5vh", paddingTop:"20px"}} >
                            Logged in as: {user.email} <br/>
                        </span> 
                    }
@@ -264,12 +264,12 @@ export default function Home(props) {
                 </select>
               </div>
 
-              <div style={{marginTop:"10px"}} className="preDefined">
+              {/* <div style={{marginTop:"10px"}} className="preDefined">
                   <span style={{marginRight:"10px", color:"white", fontWeight:"bolder"}}>Choose from predefined: </span>
                   <span style={{margin:"5px", color:"white"}}>Events in Dublin</span>
                   <span style={{margin:"5px", color:"white"}}>Only Concerts</span>
                   <span style={{margin:"5px", color:"white"}}>Concerts in 3 Area</span>
-              </div>
+              </div> */}
 
 
               
