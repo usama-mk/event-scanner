@@ -13,6 +13,8 @@ export default function Home(props) {
     const [selectedLocation, setSelectedLocation] = useState("");
     const [selectedMonthAndYear, setSelectedMonthAndYear ] = useState("");
     const [isAdmin, setIsAdmin]=useState("")
+    const[selectedCountry, setSelectedCountry]=useState("")
+    const [selectedName, setSelectedName]=useState("")
 
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
@@ -52,16 +54,32 @@ export default function Home(props) {
     console.log(LOCATION)
      
    }
+   const selectName=()=>{
+    const NAME= document.getElementById("name").value
+    setSelectedName(NAME);
+    console.log(NAME)
+     
+   }
+   const selectCountry=()=>{
+    const COUNTRY= document.getElementById("country").value
+    setSelectedCountry(COUNTRY);
+    console.log(COUNTRY)
+     
+   }
 
    const resetFilters=()=>{
        setSelectedGenre("")
        setSelectedLocation("")
        setSelectedMonthAndYear("")
        setSelectedCity("")
+       setSelectedCountry("")
+       setSelectedName("")
         document.getElementById("genre").value=""
         document.getElementById("location").value=""
         document.getElementById("month").value=""
         document.getElementById("city").value=""
+        document.getElementById("country").value=""
+        document.getElementById("name").value=""
    }
    //check admin
    useEffect(()=>{
@@ -119,7 +137,10 @@ export default function Home(props) {
                         genre: doc.data().eventType,
                         location: doc.data().location,
                         city: doc.data().city,
-                        monthAndYear: doc.data().monthAndYear
+                        monthAndYear: doc.data().monthAndYear,
+                        name: doc.data().name,
+                        country: doc.data().country,
+                        approved: doc.data().approved
     
     
                     })
@@ -174,8 +195,9 @@ export default function Home(props) {
                 <option value="" disabled selected>Genre</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
-                          
+                        if(dropDowns.approved==true){
                           return <option value={dropDowns.genre} >{dropDowns.genre}</option>
+                        }
                       })
                   }
                 </select>
@@ -184,7 +206,9 @@ export default function Home(props) {
                 <option value="" disabled selected>City</option>
                   {
                       dropDownDetails.map((dropDowns)=>{
+                        if(dropDowns.approved==true){
                           return <option value={dropDowns.city} >{dropDowns.city}</option>
+                        }
                       })
                   }
                 </select>
@@ -193,7 +217,9 @@ export default function Home(props) {
                 <option value="" disabled selected>Location</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
+                        if(dropDowns.approved==true){
                           return <option value={dropDowns.location} >{dropDowns.location}</option>
+                        }
                       })
                   }
                 </select>
@@ -202,7 +228,32 @@ export default function Home(props) {
                 <option value="" disabled selected>Month</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
+                        if(dropDowns.approved==true){
                           return <option value={dropDowns.monthAndYear} >{dropDowns.monthAndYear}</option>
+                        }
+                      })
+                  }
+                </select>
+                {/* Name */}
+                <select onChange={selectName} style={{padding:"5px", margin:"10px"}} name="name" id="name">
+                <option value="" disabled selected>Name</option>
+                {
+                      dropDownDetails.map((dropDowns)=>{
+                          if(dropDowns.approved==true){
+                            return <option value={dropDowns.name} >{dropDowns.name}</option>
+                          }
+                         
+                      })
+                  }
+                </select>
+                {/* Country */}
+                <select onChange={selectCountry} style={{padding:"5px", margin:"10px"}} name="country" id="country">
+                <option value="" disabled selected>Country</option>
+                {
+                      dropDownDetails.map((dropDowns)=>{
+                        if(dropDowns.approved==true){
+                          return <option value={dropDowns.country} >{dropDowns.country}</option>
+                        }
                       })
                   }
                 </select>
@@ -223,7 +274,10 @@ export default function Home(props) {
                {
                    posters.map((poster)=>{
                        if(((selectedGenre? selectedGenre==poster.data.eventType : true) && ( selectedCity ? selectedCity==poster.data.city : true)
-                        && (selectedLocation ? selectedLocation==poster.data.location: true) && (selectedMonthAndYear ? selectedMonthAndYear==poster.data.monthAndYear : true)
+                        && (selectedLocation ? selectedLocation==poster.data.location: true)
+                        && ( selectedName ? selectedName==poster.data.name: true)
+                        && (selectedCountry ? selectedCountry==poster.data.country: true)
+                        && (selectedMonthAndYear ? selectedMonthAndYear==poster.data.monthAndYear : true)
                         ) && poster.data.approved==true){
                            console.log(`selected genre is ${selectedGenre}`)
                         return <Poster city={poster.data.city} 
@@ -234,16 +288,30 @@ export default function Home(props) {
                         name={poster.data.name}
                         />
                        }
-                       else if(!selectedGenre && poster.data.approved==true){
-                           console.log("selected genre not selected")
-                        return <Poster city={poster.data.city} 
-                        location={poster.data.location}
-                        monthAndYear={poster.data.monthAndYear}
-                        genre={poster.data.eventType}
-                        imageUrl= {poster.data.imageUrl}
-                        name={poster.data.name}
-                        />
-                       }
+                      
+                       else if((!selectedGenre && !selectCity && !selectCountry && !selectLocation && !selectMonth  && !selectName
+                                ) && poster.data.approved==true){
+                                    console.log("No filter is selected")
+                                        return <Poster city={poster.data.city} 
+                                        location={poster.data.location}
+                                        monthAndYear={poster.data.monthAndYear}
+                                        genre={poster.data.eventType}
+                                        imageUrl= {poster.data.imageUrl}
+                                        name={poster.data.name}
+                                        />
+                    }
+
+                    //    else if(!selectedGenre && poster.data.approved==true){
+                    //        console.log("selected genre not selected")
+                    //     return <Poster city={poster.data.city} 
+                    //     location={poster.data.location}
+                    //     monthAndYear={poster.data.monthAndYear}
+                    //     genre={poster.data.eventType}
+                    //     imageUrl= {poster.data.imageUrl}
+                    //     name={poster.data.name}
+                    //     />
+                    //    }
+                  
                       
                    })
                }
