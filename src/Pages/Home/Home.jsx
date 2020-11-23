@@ -159,7 +159,7 @@ export default function Home(props) {
     return (
         <div className="home">
             <div className="title">
-               <div style={{marginTop:"5vh"}}>
+               <div style={{marginTop:"10vh"}}>
                    {
                        user && <span style={{color:"white"}} >
                            Logged in as: {user.email} <br/>
@@ -181,7 +181,7 @@ export default function Home(props) {
                 </Button>
                 }
                  {
-                   ( isAdmin) && <Button onClick={handleApprovePostRoute}>
+                   (user && isAdmin) && <Button onClick={handleApprovePostRoute}>
                     <h4 style={{color:"blue"}}>Approve Post</h4>
                 </Button>
                 }
