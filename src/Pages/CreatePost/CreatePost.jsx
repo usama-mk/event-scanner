@@ -1,4 +1,4 @@
-import { IconButton, Input, LinearProgress, TextField } from '@material-ui/core';
+import { Button, IconButton, Input, LinearProgress, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import {useForm} from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -145,13 +145,13 @@ export default function CreatePost(props) {
 
     return (
         <div  className={classes.paper}>
-            <h5 style={{color:"yellow"}} onClick={handleHomeRoute}>Home</h5>
-            <h1>Create Poster</h1>
-            <h2>Upload Poster Picture</h2>
+            <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold"}} onClick={handleHomeRoute}>Home</Button>
+            <h1 style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}}>Create Poster</h1>
+            <h3 style={{backgroundColor:"black",color:"white", fontWeight:"bold", padding:"5px"}}>Upload Poster Picture</h3>
               <div>
               <input type="file" className="input"  onChange={selectFileHandler}/> <br/>
                <LinearProgress color="primary" variant="determinate" value={progress} />
-               <button className="btn"  onClick={uploadFileHandler} >Upload</button>
+               <Button style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}} className="btn"  onClick={uploadFileHandler} >Upload</Button>
               </div>
            <form autoComplete="off" className="go-right" onSubmit={handleSubmit(onSubmit)} >
         

@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Poster from '../../Components/Poster/Poster';
 import { db, firebaseApp } from '../../firebase';
+import logo from '../../Assets/img/es1red.png';
 import './Home.css'
 
 export default function Home(props) {
@@ -161,35 +162,39 @@ export default function Home(props) {
             <div className="title">
                <div style={{marginTop:"10vh"}}>
                    {
-                       user && <span style={{color:"white"}} >
+                       user && <span style={{color:"white", marginTop:"5vh", paddingTop:"30px"}} >
                            Logged in as: {user.email} <br/>
                        </span> 
                    }
                {
                    !user && <Button onClick={()=>{handleLoginRoute("/login")}}>
-                   <h4 style={{color:"yellow"}}>Login</h4>
+                   <h4 style={{color:"yellow", backgroundColor:"black", padding:"5px"}}>Login</h4>
                </Button>
                }
                 {
                     user && <Button onClick={handleLogout}>
-                    <h4 style={{color:"red"}}>Log Out</h4>
+                    <h4 style={{color:"white", backgroundColor:"red", padding:"5px", borderRadius:"50px"}}>Log Out</h4>
                 </Button>
                 }
                  {
                     user && <Button onClick={handleCreatePostRoute}>
-                    <h4 style={{color:"yellow"}}>Create Post</h4>
+                    <div>
+                    <h4 style={{color:"yellow", backgroundColor:"black", padding:"5px"}}>Create Post</h4>
+                    </div>
                 </Button>
                 }
                  {
                    (user && isAdmin) && <Button onClick={handleApprovePostRoute}>
-                    <h4 style={{color:"blue"}}>Approve Post</h4>
+                    <h4 style={{color:"black", backgroundColor:"yellow", padding:"5px"}}>Approve Post</h4>
                 </Button>
                 }
                </div>
+              
               <h1 style={{display: "inline-block", color:"white", borderBottom: "1px solid black", }}>
               EventsScanner! Searching for an event made simple!
               </h1>
               <div className="dropDowns">
+               
   
                 <select onChange={selectGenre} style={{padding:"5px", margin:"10px"}} name="genre" id="genre">
                 <option value="" disabled selected>Genre</option>

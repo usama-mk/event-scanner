@@ -45,6 +45,14 @@ export default function ApprovePost() {
             approved: true
         })
     }
+    const handleDecline = (id) => {
+        console.log(id)
+        db.collection("posters").doc(id).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+    }
 
     const handleHomeRoute = () => {
         window.location.assign("/");
@@ -55,7 +63,7 @@ export default function ApprovePost() {
         <div>
             <div className="center">
                 <div>
-                    <Button onClick={handleHomeRoute}>Home</Button>
+                    <Button onClick={handleHomeRoute} style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold"}}>Home</Button>
                 </div>
                 {
                     unApprovedPosters.map((unApprovedPoster) => {
@@ -70,9 +78,16 @@ export default function ApprovePost() {
 
                                 <Card>
                                     <div style={{ paddingLeft: "4vw", paddingRight: "4vw", padding: "1vh" }}>
-                                        <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                            <h4>{unApprovedPoster.data.name}</h4>
-                                            <Button onClick={() => { handleApprove(unApprovedPoster.id) }}>Approve Post</Button>
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems:"center" }}>
+                                           <div style={{ display: "flex", justifyContent: "center", alignItems:"center" }} >
+                                           <img style={{marginRight:"1vw"}} src={unApprovedPoster.data.imageUrl} alt="" width="40" height="50" />
+                                           <h4>
+                                               {unApprovedPoster.data.name}</h4>
+                                           </div>
+                                           <div>
+                                           <Button onClick={() => { handleApprove(unApprovedPoster.id) }} style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold"}}>Approve Post</Button>
+                                           <Button onClick={() => { handleDecline(unApprovedPoster.id) }} style={{backgroundColor:"red", color:"white", marginLeft:"0.2vw"}}>Decline</Button>
+                                           </div>
                                         </div>
                                     </div>
                                 </Card>
