@@ -52,8 +52,8 @@ useEffect(()=>{
        
        <Route exact path="/"  render={()=>(<Home user={user} isAdmin={isAdmin} />)} />
        <Route exact path="/login" component={Login} />
-       <Route exact path="/createpost" render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />
-       <Route exact path="/approvepost" render={()=>(<ApprovePost user={user}  />)} />
+       {user ? <Route exact path={`/createpost`} render={()=>(<CreatePost user={user} isAdmin={isAdmin} />)} />: <div></div> }
+       {user?<Route exact path="/approvepost" render={()=>(<ApprovePost user={user}  />)} />: <div></div>}
       </BrowserRouter>
     </div>
   );
