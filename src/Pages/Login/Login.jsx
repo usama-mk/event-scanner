@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent:'center'
     },
     avatar: {
         margin: theme.spacing(1),
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
+        height:"100%"
         
     },
     submit: {
@@ -103,7 +105,9 @@ const toggleSignup = ()=>{
 }
 
 const handleSignup = ()=>{
-    firebaseApp.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    firebaseApp.auth().createUserWithEmailAndPassword(email, password).then(()=>{
+       handleHomeRoute();
+    }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -137,19 +141,27 @@ const clearErrors = ()=>{
 const loginWIthGoogle=()=>{
     firebaseApp.auth().signInWithPopup(provider).then((result)=>{
         //Auth changes which triggers onAuthStateChanged (in auth state change method ) and sets the user
-     }).catch((error)=>{
+     }).then(
+         ()=>{
+             handleHomeRoute();
+         }
+     ).catch((error)=>{
          alert(error.message);
      })
 }
+const handleHomeRoute=()=>{
+    window.location.assign("/");
+}
 
     return (
-        <div  style={{width:"100%"}}>
+        <div  style={{width:"100%", height:"100%", display:"flex", flexDirection:"column", justifyContent:"center"}}>
             { 
             
             <Container component="main" maxWidth="xs">
             <CssBaseline />
-            
             <div className={classes.paper}>
+            <Button  style={{backgroundColor:"#ffcc00",color:"black", fontWeight:"bold"}} onClick={handleHomeRoute}>Home</Button>
+
             <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>

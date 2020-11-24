@@ -98,7 +98,7 @@ export default function Home(props) {
                 console.log("Document data:", doc.data());
                const adminsArray= doc.data().adminsArray;
                adminsArray.map((admin)=>{
-                  if(user.email==adminsArray){
+                  if(user.email==admin){
                       setIsAdmin(true)
                   }
                })
@@ -166,7 +166,7 @@ export default function Home(props) {
     return (
         <div className="home">
             <div className="title">
-               <div style={{marginTop:"7vh"}}>
+               <div style={{marginTop:"5vh"}}>
                    {
                        user && <span style={{color:"white", marginTop:"5vh", paddingTop:"20px"}} >
                            Logged in as: {user.email} <br/>
@@ -174,7 +174,7 @@ export default function Home(props) {
                    }
                {
                    !user && <Button onClick={()=>{handleLoginRoute("/login")}}>
-                   <h4 style={{color:"yellow", backgroundColor:"black", padding:"5px"}}>Login</h4>
+                   <h4 style={{color:"yellow", backgroundColor:"black", padding:"5px", borderRadius:"50px"}}>Login / Create Account</h4>
                </Button>
                }
                 {
@@ -199,7 +199,7 @@ export default function Home(props) {
               <h1 style={{display: "inline-block", color:"white", borderBottom: "1px solid black", }}>
               EventsScanner! Searching for an event made simple!
               </h1>
-              <div className="dropDowns">
+              <div style={{display:"flex", flexWrap:"wrap"}} className="dropDowns">
                
   
                 <select onChange={selectGenre} style={{padding:"5px", margin:"10px"}} name="genre" id="genre">
