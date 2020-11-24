@@ -16,6 +16,12 @@ export default function Home(props) {
     const [isAdmin, setIsAdmin]=useState("")
     const[selectedCountry, setSelectedCountry]=useState("")
     const [selectedName, setSelectedName]=useState("")
+    var  genres=[];
+    var cities=[];
+    var locations=[];
+    var countries=[];
+    var monthAndYears=[]
+    var names=[]
 
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
@@ -200,8 +206,24 @@ export default function Home(props) {
                 <option value="" disabled selected>Genre</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
-                        if(dropDowns.approved==true){
-                          return <option value={dropDowns.genre} >{dropDowns.genre}</option>
+                        var repeat= false;
+                         
+                        
+                          if(genres.includes(dropDowns.genre)){
+                            
+                            repeat=true
+                          }
+                          else{
+                            genres.push(dropDowns.genre)
+                            repeat=false
+                          }
+
+                        
+                        if(dropDowns.approved==true && !repeat){
+                          
+                         
+                            return <option value={dropDowns.genre} >{dropDowns.genre}</option>
+                          
                         }
                       })
                   }
@@ -211,7 +233,22 @@ export default function Home(props) {
                 <option value="" disabled selected>City</option>
                   {
                       dropDownDetails.map((dropDowns)=>{
-                        if(dropDowns.approved==true){
+                        var repeat= false;
+                         
+                        
+                        if(cities.includes(dropDowns.city)){
+                          
+                          repeat=true
+                        }
+                        else{
+                          cities.push(dropDowns.city)
+                          repeat=false
+                        }
+
+                      
+                      if(dropDowns.approved==true && !repeat){
+                        
+                        
                           return <option value={dropDowns.city} >{dropDowns.city}</option>
                         }
                       })
@@ -222,7 +259,22 @@ export default function Home(props) {
                 <option value="" disabled selected>Location</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
-                        if(dropDowns.approved==true){
+                        var repeat= false;
+                         
+                        
+                        if(locations.includes(dropDowns.location)){
+                          
+                          repeat=true
+                        }
+                        else{
+                          locations.push(dropDowns.location)
+                          repeat=false
+                        }
+
+                      
+                      if(dropDowns.approved==true && !repeat){
+                        
+                        
                           return <option value={dropDowns.location} >{dropDowns.location}</option>
                         }
                       })
@@ -233,7 +285,22 @@ export default function Home(props) {
                 <option value="" disabled selected>Month</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
-                        if(dropDowns.approved==true){
+                        var repeat= false;
+                         
+                        
+                        if(monthAndYears.includes(dropDowns.monthAndYear)){
+                          
+                          repeat=true
+                        }
+                        else{
+                          monthAndYears.push(dropDowns.monthAndYear)
+                          repeat=false
+                        }
+
+                      
+                      if(dropDowns.approved==true && !repeat){
+                        
+                        
                           return <option value={dropDowns.monthAndYear} >{dropDowns.monthAndYear}</option>
                         }
                       })
@@ -244,7 +311,22 @@ export default function Home(props) {
                 <option value="" disabled selected>Name</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
-                          if(dropDowns.approved==true){
+                        var repeat= false;
+                         
+                        
+                        if(names.includes(dropDowns.name)){
+                          
+                          repeat=true
+                        }
+                        else{
+                          names.push(dropDowns.name)
+                          repeat=false
+                        }
+
+                      
+                      if(dropDowns.approved==true && !repeat){
+                        
+                          
                             return <option value={dropDowns.name} >{dropDowns.name}</option>
                           }
                          
@@ -256,7 +338,22 @@ export default function Home(props) {
                 <option value="" disabled selected>Country</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
-                        if(dropDowns.approved==true){
+                        var repeat= false;
+                         
+                        
+                        if(countries.includes(dropDowns.country)){
+                          
+                          repeat=true
+                        }
+                        else{
+                          countries.push(dropDowns.country)
+                          repeat=false
+                        }
+
+                      
+                      if(dropDowns.approved==true && !repeat){
+                        
+                        
                           return <option value={dropDowns.country} >{dropDowns.country}</option>
                         }
                       })
@@ -325,3 +422,4 @@ export default function Home(props) {
         </div>
     )
 }
+ 
