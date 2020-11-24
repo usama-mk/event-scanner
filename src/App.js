@@ -34,7 +34,7 @@ useEffect(()=>{
           console.log("Document data:", doc.data());
          const adminsArray= doc.data().adminsArray;
          adminsArray.map((admin)=>{
-            if(user.email==adminsArray){
+            if(user.email==admin){
                 setIsAdmin(true)
             }
          })
