@@ -105,8 +105,10 @@ export default function CreatePost(props) {
                 draggable: true,
                 progress: undefined,
                 });
-                reset();
                 setFile("");
+                setProgress(0)
+                reset();
+                
         }
       else{
         toast.warning("please upload an image or let it finish uploading");
@@ -124,6 +126,12 @@ export default function CreatePost(props) {
     }
    
     const uploadFileHandler = () => {
+        if(file && (progress==100)){
+            toast.error("File already uploaded", {
+                position:"bottom-center"
+            })
+            return
+        }
         if (file) {
             const uploadTask = storage.ref(`images/${file.name}`).put(file);
             uploadTask.on(

@@ -19,8 +19,8 @@ body{
   padding: 0%;
   
     /* Set rules to fill background */
-    min-height: 100vh;
-    min-width: 1024px;
+    /* min-height: 100vh;
+    min-width: 1024px; */
     
     /* Set up proportionate scaling */
     width: 100%;

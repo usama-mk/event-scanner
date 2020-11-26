@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import Poster from '../../Components/Poster/Poster';
 import { db, firebaseApp } from '../../firebase';
-import logo from '../../Assets/img/es1red.png';
+import logo from '../../Assets/img/esLogo.png';
 import './Home.css'
 
 export default function Home(props) {
@@ -195,7 +195,7 @@ export default function Home(props) {
                 </Button>
                 }
                </div>
-              
+              <img src={logo} height="100px" width="300px" alt="logo"/> <br/>
               <h1 style={{display: "inline-block", color:"white", borderBottom: "1px solid black", }}>
               EventsScanner! Searching for an event made simple!
               </h1>
@@ -203,7 +203,7 @@ export default function Home(props) {
                
   
                 <select onChange={selectGenre} style={{padding:"5px", margin:"10px"}} name="genre" id="genre">
-                <option value="" disabled selected>Genre</option>
+                <option value=""  selected>eventType</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
                         var repeat= false;
@@ -230,7 +230,7 @@ export default function Home(props) {
                 </select>
 
                 <select onChange={selectCity} style={{padding:"5px", margin:"10px"}} name="city" id="city">
-                <option value="" disabled selected>City</option>
+                <option value="" selected>City</option>
                   {
                       dropDownDetails.map((dropDowns)=>{
                         var repeat= false;
@@ -256,7 +256,7 @@ export default function Home(props) {
                 </select>
 
                 <select onChange={selectLocation} style={{padding:"5px", margin:"10px"}} name="location" id="location">
-                <option value="" disabled selected>Location</option>
+                <option value="" selected>Location</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
                         var repeat= false;
@@ -282,7 +282,7 @@ export default function Home(props) {
                 </select>
 
                 <select onChange={selectMonth} style={{padding:"5px", margin:"10px"}} name="month" id="month">
-                <option value="" disabled selected>Month</option>
+                <option value="" selected>Month</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
                         var repeat= false;
@@ -308,7 +308,7 @@ export default function Home(props) {
                 </select>
                 {/* Name */}
                 <select onChange={selectName} style={{padding:"5px", margin:"10px"}} name="name" id="name">
-                <option value="" disabled selected>Name</option>
+                <option value="" selected>Name</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
                         var repeat= false;
@@ -335,7 +335,7 @@ export default function Home(props) {
                 </select>
                 {/* Country */}
                 <select onChange={selectCountry} style={{padding:"5px", margin:"10px"}} name="country" id="country">
-                <option value="" disabled selected>Country</option>
+                <option value="" selected>Country</option>
                 {
                       dropDownDetails.map((dropDowns)=>{
                         var repeat= false;
@@ -388,6 +388,10 @@ export default function Home(props) {
                         genre={poster.data.eventType}
                         imageUrl= {poster.data.imageUrl}
                         name={poster.data.name}
+                        description={poster.data.description}
+                        linkToEvent={poster.data.linkToEvent}
+                        uploader={poster.data.uploader}
+                        userEmail={poster.data.userEmail}
                         />
                        }
                       
@@ -400,6 +404,10 @@ export default function Home(props) {
                                         genre={poster.data.eventType}
                                         imageUrl= {poster.data.imageUrl}
                                         name={poster.data.name}
+                                        description={poster.data.description}
+                                        linkToEvent={poster.data.linkToEvent}
+                                        uploader={poster.data.uploader}
+                                        userEmail={poster.data.userEmail}
                                         />
                     }
 
