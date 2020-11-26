@@ -20,8 +20,9 @@ export default function Home(props) {
     var cities=[];
     var locations=[];
     var countries=[];
-    var monthAndYears=[]
-    var names=[]
+    var monthAndYears=[];
+    var names=[];
+  
 
     const handleLoginRoute=(url)=>{
         window.location.href=url ;
