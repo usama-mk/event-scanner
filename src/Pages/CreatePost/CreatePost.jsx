@@ -105,6 +105,7 @@ export default function CreatePost(props) {
                 draggable: true,
                 progress: undefined,
                 });
+                document.getElementById("input").value = "";
                 setFile("");
                 setProgress(0)
                 reset();
@@ -157,7 +158,7 @@ export default function CreatePost(props) {
             <h1 style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}}>Create Poster</h1>
             <h3 style={{backgroundColor:"black",color:"white", fontWeight:"bold", padding:"5px"}}>Upload Poster Picture</h3>
               <div>
-              <input type="file" className="input"  onChange={selectFileHandler}/> <br/>
+              <input type="file" className="input" id="input"  onChange={selectFileHandler}/> <br/>
                <LinearProgress color="primary" variant="determinate" value={progress} />
                <Button style={{backgroundColor:"black",color:"#ffcc00", fontWeight:"bold", padding:"10px"}} className="btn"  onClick={uploadFileHandler} >Upload</Button>
               </div>
