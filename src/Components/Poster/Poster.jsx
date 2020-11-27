@@ -34,7 +34,7 @@ export default function Poster(props) {
                 imageTitle={name}
                 imageCaption={<h3 style={{ width:"100%", wordSpacing:"30px", textAlign:"center",}}>{
                   `EventType=${genre}     City=${city}  Location=${location}  Month&Year=${monthAndYear} description=${description}
-                   Link=${linkToEvent}    uploader=${uploader}  userEmail=${userEmail}
+                   Link=${linkToEvent}    uploader=${uploader}   
                   `}
                   </h3>}
                 onCloseRequest={() =>{ setIsOpen(false);}}
